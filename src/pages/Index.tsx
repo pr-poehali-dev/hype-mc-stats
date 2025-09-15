@@ -3,8 +3,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
+import { PlayerProfile } from "@/components/PlayerProfile";
+import { useState } from "react";
 
 export default function Index() {
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+
+  if (selectedPlayer) {
+    return (
+      <PlayerProfile 
+        playerName={selectedPlayer} 
+        onBack={() => setSelectedPlayer(null)} 
+      />
+    );
+  }
   const topPlayers = [
     { rank: 1, name: "IMMORTAL_Mellianse", kills: 2847, deaths: 1203, kd: 2.37, level: 89, clan: "IMMORTAL" },
     { rank: 2, name: "PvP_Master", kills: 2634, deaths: 1156, kd: 2.28, level: 84, clan: "LEGENDS" },
@@ -136,6 +148,7 @@ export default function Index() {
                     <div
                       key={player.rank}
                       className="flex items-center justify-between p-4 rounded-lg bg-gray-800/30 hover:bg-gray-800/50 transition-colors cursor-pointer group"
+                      onClick={() => setSelectedPlayer(player.name)}
                     >
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-400/20">
